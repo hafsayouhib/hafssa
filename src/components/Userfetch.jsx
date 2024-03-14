@@ -1,31 +1,23 @@
-import {useState} from 'react'
-let UseFetch = ({id})=>{
+import React, { useState } from 'react';
 
-    try{
-            
-        const[list,setList]= useState()
-        fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
+function UserFetch=({ id }) {
+  const [list, setList] = useState();
 
-        .then(response => response.json())
-      .then(json => setList(json))
-      
-      return(
-        <div>
-            {list && list.title}
-        </div>
-      )
-      
+  fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    
-      catch(err){
-        console.log(err)
-      }
-   
+      return response.json();
+    })
+    .then(json => setList(json))
+    .catch(err => console.log(err));
 
+  return (
+    <div>
+      {list && list.title}
+    </div>
+  );
 }
-    
 
-
-      
-
-export {UseFetch}
+export default UserFetch;
